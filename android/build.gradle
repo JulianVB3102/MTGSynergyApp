@@ -16,3 +16,13 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+//added buildscript to fix gradle task assemble debug error 1/5/25
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.1' // Update to at least 8.2.1
+    }
+}
