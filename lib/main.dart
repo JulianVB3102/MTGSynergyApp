@@ -147,8 +147,16 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomeScreen(),
         '/search': (context) => SearchScreen(),
-        '/results': (context) => ResultsScreen(cardName: ModalRoute.of(context)!.settings.arguments as String),
+        '/results': (context) => ResultsScreen(
+          // Pass arguments as a properly structured Map
+          cardName: (ModalRoute.of(context)?.settings.arguments
+          as Map<String, dynamic>?)?['cardName'] ??
+              '',
+          arguments: ModalRoute.of(context)?.settings.arguments
+          as Map<String, dynamic>?, // Pass the full argument map
+        ),
       },
     );
   }
 }
+

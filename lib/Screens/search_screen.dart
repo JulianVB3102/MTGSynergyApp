@@ -65,15 +65,31 @@ class _SearchScreenState extends State<SearchScreen> {
             // Search Button
             ElevatedButton(
               onPressed: () {
+                final cardName = cardNameController.text.trim();
+
+                if (cardName.isEmpty) {
+                  // Validate that a card name is entered
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Please enter a card name.')),
+                  );
+                  return;
+                }
+
+                // Log arguments for debugging
+                final arguments = {
+                  'cardName': cardName,
+                  'dsc': selectedColor?.isNotEmpty == true ? selectedColor : null,
+                  'cmc': cmcController.text.trim().isNotEmpty
+                      ? int.tryParse(cmcController.text.trim())
+                      : null,
+                };
+                print("Arguments passed to ResultsScreen: $arguments");
+
                 // Pass inputs to the results screen
                 Navigator.pushNamed(
                   context,
                   '/results',
-                  arguments: {
-                    'cardName': cardNameController.text.trim(),
-                    'dsc': selectedColor,
-                    'cmc': int.tryParse(cmcController.text.trim()) ?? 0,
-                  },
+                  arguments: arguments,
                 );
               },
               child: Text('Search'),
@@ -84,3 +100,5 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
+
+
